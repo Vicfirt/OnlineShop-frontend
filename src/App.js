@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import {Route, Switch} from 'react-router-dom';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '@popperjs/core';
+import Home from './pages/Home';
+import Login from './pages/Login/Login';
+import {Grid, Cell} from "styled-css-grid";
+import Header from "./components/Header/Header";
+import Catalog from "./pages/Catalog/Catalog"
+import Footer from "./components/Footer/Footer";
+import Registration from './pages/Registration/Registration';
+import Cart from "./pages/Cart/Cart";
+import Order from "./pages/Order/Order";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+class App extends Component {
+
+    render() {
+
+        return (
+            <Grid
+                columns={"1fr"}
+                rows={"minmax(45px, auto) 1fr minmax(45px, auto)"}>
+                <Cell>
+                    <Header/>
+                </Cell>
+                <Cell top={2} >
+                    <Switch>
+                        <Route exact path="/" component={Home}/>
+                        <Route exact path="/login" component={Login}/>
+                        <Route exact path="/catalog" component={Catalog}/>
+                        <Route exact path="/signup" component={Registration}/>
+                        <Route exact path="/cart" component={Cart}/>
+                        <Route exact path="/order" component={Order}/>
+                    </Switch>
+                </Cell>
+                <Cell >
+                    <Footer/>
+                </Cell>
+            </Grid>
+        );
+    }
 }
 
 export default App;

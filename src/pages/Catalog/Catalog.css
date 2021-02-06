@@ -1,0 +1,16 @@
+.wrapper{
+    display: grid;
+
+    grid-template-areas: "filter catalog";
+    grid-template-columns: 3fr 9fr;
+
+}
+
+.catalog{
+    grid-area: catalog;
+}
+
+.filter{
+    grid-area: filter;
+    background-color: blue;
+}
