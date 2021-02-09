@@ -86,7 +86,6 @@ class Cart extends Component {
         this.props.calculateCartPrice(this.props.products)
     }
 
-
     render() {
         const {products, isLoading, totalPrice} = this.props;
         const {productsInCart} = this.state;
@@ -180,7 +179,7 @@ class Cart extends Component {
 const mapStateToProps = (state) => ({
     products: state.cart.products,
     totalPrice: state.cart.totalPrice,
-    isLoading: state.cart.isLoading
+    isLoading: state.cart.isLoading,
 });
 
 export default connect(mapStateToProps, {fetchCart, stopCartLoading, calculateCartPrice})(Cart)

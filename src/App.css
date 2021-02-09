@@ -1,29 +1,3 @@
-.wrapper {
-
-  display: grid;
-
-
-  grid-template-areas:
-  "h"
-  "c"
-  "f";
-  grid-template-rows: 60px 587px 50px;
-  grid-template-columns: 1fr;
-
-}
-
-.content{
-
-
-  background-color: chartreuse;
-
-  grid-area: c;
-}
-
-
-
-
-
 
 
 

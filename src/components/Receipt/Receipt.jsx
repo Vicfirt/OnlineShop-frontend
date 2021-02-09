@@ -1,17 +1,28 @@
 import React, {Component} from 'react';
-import {connect} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {
-    faShoppingBag,
-} from "@fortawesome/free-solid-svg-icons";
+import {faShoppingCart, faShoppingBag} from "@fortawesome/free-solid-svg-icons";
+import {Link} from "react-router-dom";
 
+const Receipt = ({order, backToOrders}) => {
 
-const Receipt = ({orders}) => {
+    let cartLink = (
+        <Link to={"/catalog"}>
+            <button className="btn btn-success">
+                <FontAwesomeIcon className="mr-2" icon={faShoppingCart}/> Go shopping!
+            </button>
+        </Link>
+    );
+    let backLink = null;
+
+    if (backToOrders) {
+        backLink = (<button className="btn btn-dark" onClick={() => backToOrders()}>Back to orders</button>);
+    }
+    if (localStorage.getItem("userRole") === "ADMIN") {
+        cartLink = null;
+    }
+    const elements = order.orderElementList;
 
     return (
-        <div>
-            {orders.map((order) => {
-                return (
         <div className="container mt-5">
             <h4><FontAwesomeIcon className="ml-2 mr-2" icon={faShoppingBag}/> Thanks for order!</h4>
 
@@ -20,30 +31,52 @@ const Receipt = ({orders}) => {
                 <tr>
                     <th scope="col">Order №</th>
                     <th scope="col">Customer</th>
-                    <th scope="col">Address</th>
-                    <th scope="col">Post index</th>
+                    <th scope="col">Post code</th>
                     <th scope="col">Total, $</th>
                     <th scope="col">Date</th>
                 </tr>
                 </thead>
                 <tbody>
-                        <tr key={order.id}>
-                            <th>{order.customerFirstName + " " + order.customerLastName}</th>
-                            <th>{order.country + "," +order.city + "," + order.street + "st. , building: " + order.building + "room: " + order.room}</th>
-                            <th>{order.postcode}</th>
-                            <th>{order.total}</th>
-                            <th>{order.date}</th>
-                        </tr>
+                <tr>
+                    <th scope="col">{order.orderId}</th>
+                    <th scope="col">{order.customerFirstName + " " + order.customerLastName}</th>
+                    <th scope="col">{order.postcode}</th>
+                    <th scope="col">{order.total}</th>
+                    <th scope="col">{order.date}</th>
+                </tr>
                 </tbody>
-
             </table>
-        </div>
-                    )})}
+            <h4>Products in order:</h4>
+            <table className="table mt-4">
+                <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Brand</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                </tr>
 
+                </thead>
+                <tbody>
+                {elements.map((element) => {
+                    return (
+                        <tr>
+                            <th scope="col">{element.product.productName}</th>
+                            <th scope="col">{element.product.productBrand}</th>
+                            <th scope="col">{element.product.productModel}</th>
+                            <th scope="col">{element.product.productPrice}</th>
+                            <th scope="col">{element.quantityInOrder}</th>
+                        </tr>
+                    )
+                })}
+                </tbody>
+            </table>
+            {cartLink}
+
+            {backLink}
         </div>
     )
-
-
 }
 
 export default Receipt;

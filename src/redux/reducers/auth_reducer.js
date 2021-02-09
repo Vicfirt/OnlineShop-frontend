@@ -9,7 +9,6 @@ import {
 } from "../../utils/constants/action_types";
 
 const initialState = {
-    user: {},
     isLoggedIn: false,
     isRegistered: false,
     success: "",
@@ -19,25 +18,32 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
     const {type, payload} = action;
+    console.log(payload)
 
     switch (type) {
         case LOGIN_SUCCESS:
+            console.log("log success")
             return {...state, isLoggedIn: true};
 
         case LOGIN_FAILURE:
+            console.log("log failure")
             return {...state, error: payload};
 
         case REGISTER_FAILURE:
+            console.log("reg failure")
             return {...state, errors: payload};
 
         case REGISTER_SUCCESS:
+            console.log("reg success")
             return {...state, isRegistered: true};
 
         case FORM_RESET:
+            console.log("reset")
             return {...state, error: "", errors: {}, success: "", isRegistered: false};
 
         case LOGOUT:
-            return {...state, isLoggedIn: false, user: {}};
+            console.log("logout")
+            return {...state, isLoggedIn: false};
 
         default:
             return state;

@@ -78,8 +78,6 @@ class CatalogNavbar extends Component {
                         getAriaValueText={valuetext()}/>
                 </Cell>
             </Grid>
-
-
         )
     }
 }

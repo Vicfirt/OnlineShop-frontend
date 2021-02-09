@@ -12,7 +12,7 @@ class Login extends Component {
     };
 
     componentDidMount() {
-        this.props.formReset();
+
     }
 
     onClickSignIn = (event) => {
@@ -34,7 +34,7 @@ class Login extends Component {
         const {username, password} = this.state;
         const {error, success} = this.props;
         if (localStorage.getItem("isLoggedIn")) {
-            return <Redirect to="/account"/>
+            return <Redirect to="/"/>
         }
 
         return (
@@ -76,7 +76,8 @@ class Login extends Component {
 
 const mapStateToProps = (state) => ({
     error: state.auth.error,
-    success: state.auth.success
+    success: state.auth.success,
+    customer: state.auth.customer
 });
 
 export default connect(mapStateToProps, {login, formReset})(Login);
