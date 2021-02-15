@@ -1,15 +1,9 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import React, {Component} from 'react';
-import {
-    faShoppingBag
-} from "@fortawesome/free-solid-svg-icons";
-import Receipt from "../Receipt/Receipt";
-import {Link} from "react-router-dom";
+import {faShoppingBag} from "@fortawesome/free-solid-svg-icons";
 import {Dropdown, DropdownButton} from "react-bootstrap";
 
-
 const OrdersList = ({orders, showOrderInfo, changeOrderStatus}) => {
-
 
     return (
 

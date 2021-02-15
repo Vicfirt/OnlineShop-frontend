@@ -10,25 +10,25 @@ import {BACKEND_BASE_URL} from '../utils/constants/backend_base_url'
 
 export const fetchCustomerInfo = () => async (dispatch) => {
 
-        const response = await axios({
-            method: "GET",
-            url: BACKEND_BASE_URL + "/customer",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            }
-        })
+    const response = await axios({
+        method: "GET",
+        url: BACKEND_BASE_URL + "/customer",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    })
 
-        dispatch({
-            type: FETCH_CUSTOMER_INFO,
-            payload: response.data
-        })
+    dispatch({
+        type: FETCH_CUSTOMER_INFO,
+        payload: response.data
+    })
 }
 
 export const updateCustomer = (data) => async (dispatch) => {
 
     try {
-       const response = await axios({
+        const response = await axios({
             method: "PUT",
             url: BACKEND_BASE_URL + "/customer",
             data: data,
@@ -40,7 +40,7 @@ export const updateCustomer = (data) => async (dispatch) => {
         dispatch({
             type: UPDATE_CUSTOMER_SUCCESS
         })
-    }catch (error){
+    } catch (error) {
         console.log(error)
         dispatch({
             type: UPDATE_CUSTOMER_FAILURE,

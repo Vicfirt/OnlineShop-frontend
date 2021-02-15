@@ -55,7 +55,10 @@ export const registration = (data) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-    localStorage.clear();
+    localStorage.removeItem("email");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("isLoggedIn");
     dispatch({
         type: LOGOUT
     })

@@ -19,7 +19,7 @@ class Cart extends Component {
     };
 
     componentDidMount() {
-        let products = new Map(JSON.parse(localStorage.getItem("products")));
+        let products =  new Map(JSON.parse(localStorage.getItem("products")));
 
         if (products !== null) {
             this.props.fetchCart(Array.from(products.keys()));
@@ -56,7 +56,7 @@ class Cart extends Component {
             this.setState({
                 productsInCart: productsInCart.set(parseInt(event.target.id), 1)
             });
-            localStorage.setItem("products", JSON.stringify(Array.from(productsInCart.entries())));
+                localStorage.setItem("products", JSON.stringify(Array.from(productsInCart.entries())));
         } else {
             this.setState({
                 productsInCart: productsInCart.set(parseInt(event.target.id), parseInt(event.target.value))
@@ -180,6 +180,7 @@ const mapStateToProps = (state) => ({
     products: state.cart.products,
     totalPrice: state.cart.totalPrice,
     isLoading: state.cart.isLoading,
+    isLoggedIn: state.auth.isLoggedIn,
 });
 
 export default connect(mapStateToProps, {fetchCart, stopCartLoading, calculateCartPrice})(Cart)

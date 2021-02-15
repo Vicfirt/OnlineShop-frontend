@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import{
+import {
     FETCH_CUSTOMER_ORDERS,
     ORDER_ADD_FAILURE,
     ORDER_ADD_SUCCESS,
@@ -47,24 +47,24 @@ export const fetchCustomerOrders = () => async (dispatch) => {
         }
     })
     dispatch({
-        type:FETCH_CUSTOMER_ORDERS,
+        type: FETCH_CUSTOMER_ORDERS,
         payload: response.data
     })
 }
 
 export const fetchOrderById = (orderId) => async (dispatch) => {
-        const response = await axios({
-            method: "GET",
-            url: BACKEND_BASE_URL + "/order/" + orderId,
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            }
-        })
-        dispatch({
-            type: FETCH_CUSTOMER_ORDER,
-            payload: response.data
-        })
+    const response = await axios({
+        method: "GET",
+        url: BACKEND_BASE_URL + "/order/" + orderId,
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem("token")
+        }
+    })
+    dispatch({
+        type: FETCH_CUSTOMER_ORDER,
+        payload: response.data
+    })
 }
 
 export const fetchAllOrders = () => async (dispatch) => {
@@ -77,7 +77,7 @@ export const fetchAllOrders = () => async (dispatch) => {
         }
     })
     dispatch({
-        type:FETCH_CUSTOMER_ORDERS,
+        type: FETCH_CUSTOMER_ORDERS,
         payload: response.data
     })
 }
@@ -93,10 +93,9 @@ export const updateOrder = (data, id) => async (dispatch) => {
         }
     })
     dispatch({
-        type:FETCH_CUSTOMER_ORDERS,
+        type: FETCH_CUSTOMER_ORDERS,
         payload: response.data
     })
-
 }
 
 

@@ -24,7 +24,6 @@ class CustomerOrdersList extends Component {
             </div>
         )
     }
-
 }
 
 const mapStateToProps = (state) => ({

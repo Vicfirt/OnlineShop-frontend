@@ -1,90 +1,63 @@
-import React, {Component} from 'react';
-import {Grid, Cell} from "styled-css-grid";
-import {DropdownButton, Dropdown} from 'react-bootstrap'
-import {Slider, Typography} from '@material-ui/core'
-import {connect} from "react-redux";
-import {fetchProductsByBrand, fetchProducts, fetchProductsByCategory} from "../../actions/catalog_actions";
+import React from 'react';
+import {Form, Button} from 'react-bootstrap'
+import InputRange from "react-input-range";
+import 'react-input-range/lib/css/index.css'
 
-class CatalogNavbar extends Component {
+const CatalogNavbar = ({
+                           categories, range, handleChange, brands, handleBrandSelect,
+                           handleCategorySelect, setFilter
+                       }) => {
+    return (
+        <div>
+            <h3 className="text-muted ml-2 mt-3">Filter By</h3>
 
-    state = {
-        minValue: 0,
-        maxValue: 1000
-    }
+            <div className="mt-3">
+                <h5>Categories</h5>
+                {categories.map((category) => {
+                    return (
+                        <Form.Check
+                            name="category"
+                            value={category.categoryName}
+                            onChange={handleCategorySelect}
+                            inline
+                            label={category.categoryName}
+                        />
+                    );
 
-    render() {
+                })}
+            </div>
+            <div className="mt-3">
+                <h5>Brands</h5>
+                {brands.map((brand) => {
+                    return (
+                        <Form.Check
+                            name="brand"
+                            value={brand}
+                            onChange={handleBrandSelect}
+                            inline
+                            label={brand}
 
-        const some = () => {
+                        />
+                    );
 
-        }
+                })}
+            </div>
+            <Button onClick={setFilter}>Set filter</Button>
 
-        const valuetext = () => {
-        }
-
-        const filterByBrand = (brandName) => {
-
-            this.props.fetchProductsByBrand(brandName);
-        }
-
-        const brandNames = this.props.products.map((product) =>
-
-            <Dropdown.Item onSelect={() => filterByBrand(product.productBrand)}>{product.productBrand}</Dropdown.Item>
-        );
-
-        const resetFilter = () => {
-            this.props.fetchProducts();
-        }
-
-        const filterByCategory = (categoryId) => {
-            this.props.fetchProductsByCategory(categoryId);
-        }
-
-        return (
-            <Grid
-                columns={"1fr"}
-                rows={"50px 200px 40px"}>
-                <Cell>
-                    <h3 className="text-muted ml-2">Filter By</h3>
-                </Cell>
-                <Cell>
-                    <div>
-                        <DropdownButton
-                            title="Category"
-                            drop="right">
-                            <Dropdown.Item onSelect={() => resetFilter()}>All categories</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => filterByCategory(0)}>Books</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => filterByCategory(1)}>Electronics</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => filterByCategory(2)}>Clothes</Dropdown.Item>
-                        </DropdownButton>
-                    </div>
-                    <div>
-                        <DropdownButton
-                            title="Brand"
-                            drop="right">
-                            <Dropdown.Item onSelect={() => resetFilter()}>All brands</Dropdown.Item>
-                            {brandNames}
-                        </DropdownButton>
-                    </div>
-                </Cell>
-                <Cell>
-                    <Typography id="range-slider" gutterBottom>
-                        Price range
-                    </Typography>
-                    <Slider
-                        value={50}
-                        onChange={some()}
-                        valueLabelDisplay="auto"
-                        aria-labelledby="range-slider"
-                        getAriaValueText={valuetext()}/>
-                </Cell>
-            </Grid>
-        )
-    }
+            <div className="mt-3">
+                <h4>Price $</h4>
+                <div className="col-10">
+                    <hr/>
+                    <InputRange
+                        draggableTrack
+                        maxValue={1000}
+                        minValue={0}
+                        value={range}
+                        onChange={value => handleChange(value)}/>
+                </div>
+            </div>
+        </div>
+    )
 }
 
-const mapStateToProps = (state) => ({
-    products: state.catalog.products
-
-})
-
-export default connect(mapStateToProps, {fetchProductsByBrand, fetchProducts, fetchProductsByCategory})(CatalogNavbar);
+export default CatalogNavbar;
