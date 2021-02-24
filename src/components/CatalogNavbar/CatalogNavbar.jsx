@@ -45,12 +45,12 @@ const CatalogNavbar = ({
             <Button onClick={setFilter}>Set filter</Button>
 
             <div className="mt-3">
-                <h4>Price $</h4>
+                <h5>Price $</h5>
                 <div className="col-10">
                     <hr/>
                     <InputRange
                         draggableTrack
-                        maxValue={1000}
+                        maxValue={5000}
                         minValue={0}
                         value={range}
                         onChange={value => handleChange(value)}/>

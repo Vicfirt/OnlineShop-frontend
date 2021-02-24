@@ -14,7 +14,7 @@ export const addProduct = (data) => async (dispatch) => {
     try {
         const response = await axios({
             method: "POST",
-            url: BACKEND_BASE_URL + "/product/add",
+            url: BACKEND_BASE_URL + "/product/new",
             data: data,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
@@ -41,10 +41,9 @@ export const formReset = () => async (dispatch) => {
 
 export const updateProduct = (data) => async (dispatch) => {
     try {
-        console.log("update.....")
         const response = await axios({
             method: "PUT",
-            url: BACKEND_BASE_URL + "/product/edit",
+            url: BACKEND_BASE_URL + "/product/edition",
             data: data,
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")

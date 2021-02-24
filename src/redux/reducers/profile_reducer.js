@@ -1,7 +1,9 @@
-import {FETCH_CUSTOMER_INFO,
-UPDATE_CUSTOMER_FAILURE,
-UPDATE_CUSTOMER_SUCCESS,
-    EDIT_PROFILE_FORM_RESET} from '../../utils/constants/action_types'
+import {
+    FETCH_CUSTOMER_INFO,
+    UPDATE_CUSTOMER_FAILURE,
+    UPDATE_CUSTOMER_SUCCESS,
+    EDIT_PROFILE_FORM_RESET
+} from '../../utils/constants/action_types'
 
 const initialState = {
     customer: {},
@@ -20,7 +22,7 @@ const reducer = (state = initialState, action) => {
             return {...state, errors: payload}
 
         case UPDATE_CUSTOMER_SUCCESS:
-            return {...state, isUpdated: true }
+            return {...state, isUpdated: true}
 
         case EDIT_PROFILE_FORM_RESET:
             return {...state, customer: {}, errors: {}, isUpdated: false}

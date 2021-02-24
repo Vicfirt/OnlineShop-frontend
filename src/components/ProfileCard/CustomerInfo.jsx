@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 
 const CustomerInfo = ({customerInfo}) => {
 
-    return(
+    return (
 
         <div className="card border border-dark bg-dark text-white" style={{height: "22rem", marginLeft: "15px"}}>
             <div className="card-body">

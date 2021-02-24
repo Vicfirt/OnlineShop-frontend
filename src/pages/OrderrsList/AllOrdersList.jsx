@@ -19,11 +19,13 @@ class AllOrdersList extends Component {
     }
 
     render() {
+
         return (
             <div>
                 {this.props.order.length !== 0 ?
                     <Receipt order={this.props.order} backToOrders={this.props.fetchAllOrders}/> :
-                    <OrdersList orders={this.props.orders} showOrderInfo={this.showOrderInfo}
+                    <OrdersList orders={this.props.orders}
+                                showOrderInfo={this.showOrderInfo}
                                 changeOrderStatus={this.changeOrderStatus}/>}
             </div>
         )
@@ -35,4 +37,4 @@ const mapStateToProps = (state) => ({
     order: state.order.order
 })
 
-export default connect (mapStateToProps, {fetchAllOrders, fetchOrderById, updateOrder})(AllOrdersList);
+export default connect(mapStateToProps, {fetchAllOrders, fetchOrderById, updateOrder})(AllOrdersList);

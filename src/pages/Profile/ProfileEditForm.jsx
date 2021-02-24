@@ -72,7 +72,8 @@ class ProfileEditForm extends Component {
     render() {
         const {
             customerPassword, customerFirstName, customerLastName, customerDateOfBirth,
-            phoneNumber, country, city, postcode, street, building, room} = this.state;
+            phoneNumber, country, city, postcode, street, building, room
+        } = this.state;
 
         const {
             customerPasswordError, customerFirstNameError, customerLastNameError,
@@ -81,14 +82,14 @@ class ProfileEditForm extends Component {
 
         return (
             <Row className="justify-content-md-center">
-                {this.props.isUpdated ? <div className="alert alert-success col-6" role="alert">
-                    Customer info updated successfully
-                </div> : null}
                 <Col xs={5}>
                     <Card className={"border border-dark bg-dark text-white"}>
                         <Card.Header>
                             <FontAwesomeIcon icon={faUserEdit}/> Profile Edition
                         </Card.Header>
+                        {this.props.isUpdated ? <div className="alert alert-success col-6" role="alert">
+                            Customer info updated successfully
+                        </div> : null}
                         <Card.Body>
                             <Form.Row>
                                 <Form.Group as={Col}>

@@ -3,22 +3,23 @@ import {connect} from "react-redux";
 import {formReset, updateProduct} from "../../actions/product_actions";
 import {fetchProduct, fetchCategories} from "../../actions/catalog_actions";
 import {Button, Card, Col, Form, FormControl, InputGroup, Row} from "react-bootstrap";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit} from "@fortawesome/free-solid-svg-icons";
+import {IMAGE_PATH} from "../../utils/constants/backend_base_url";
 
 class EditProduct extends Component {
 
     state = {
-        productId:"",
+        productId: "",
         productName: "",
         productPrice: "",
-        category: "Books",
+        category: "",
         productBrand: "",
-        productModel:"",
-        productWeight:"",
-        productCapacity:"",
-        amountInStock:"",
-        productDescription:"",
+        productModel: "",
+        productWeight: "",
+        productCapacity: "",
+        amountInStock: "",
+        productDescription: "",
         active: true,
         productImage: null,
         imgFile: null
@@ -45,9 +46,12 @@ class EditProduct extends Component {
     onSubmitClick = (event) => {
 
         event.preventDefault();
-        const{productName, productPrice, category, productBrand, productModel, productWeight, productCapacity,
-            amountInStock, productDescription, active, imgFile, productId} = this.state;
+        const {
+            productName, productPrice, category, productBrand, productModel, productWeight, productCapacity,
+            amountInStock, productDescription, active, imgFile, productId
+        } = this.state;
 
+        console.log(category)
         const formData = new FormData();
         formData.append("imgFile", imgFile);
         formData.append("productName", productName);
@@ -64,7 +68,6 @@ class EditProduct extends Component {
         this.props.updateProduct(formData);
     };
 
-
     handleInputChange = (event) => {
         const {name, value} = event.target;
 
@@ -75,11 +78,15 @@ class EditProduct extends Component {
 
     render() {
 
-        const {productName, productPrice, category, productBrand, productModel, productWeight, productCapacity,
-            amountInStock, productDescription, active, productImage, productId} = this.state;
+        const {
+            productName, productPrice, category, productBrand, productModel, productWeight, productCapacity,
+            amountInStock, productDescription, active, productImage, productId
+        } = this.state;
 
-        const {productNameError, productPriceError, productBrandError, productModelError, productWeightError, productCapacityError,
-            amountInStockError, productDescriptionError} = this.props.errors
+        const {
+            productNameError, productPriceError, productBrandError, productModelError, productWeightError, productCapacityError,
+            amountInStockError, productDescriptionError
+        } = this.props.errors
 
         const {categories} = this.props;
 
@@ -97,8 +104,8 @@ class EditProduct extends Component {
                         <Card.Body>
                             <Form.Row>
                                 <Form.Group as={Col}>
-                                    <img src={"http://localhost:8080/media/" + `${productImage}`}
-                                         style={{width:"50px", height: "50px"}}
+                                    <img src={IMAGE_PATH + `${productImage}`}
+                                         style={{width: "50px", height: "50px"}}
                                          className="rounded mb-2"/>
                                     <div className="col" style={{marginTop: "35px"}}>
 
@@ -112,8 +119,10 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl autoComplete="off" type="text" name="productName" value={productName} onChange={this.handleInputChange}
-                                                     className={"bg-dark text-white"} placeholder="Product name" isInvalid={productNameError}
+                                        <FormControl autoComplete="off" type="text" name="productName"
+                                                     value={productName} onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"} placeholder="Product name"
+                                                     isInvalid={productNameError}
                                         />
                                         <div className="invalid-feedback d-block">{productNameError}</div>
                                     </InputGroup>
@@ -122,7 +131,8 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl autoComplete="off" type="text" name="productBrand" value={productBrand} onChange={this.handleInputChange}
+                                        <FormControl autoComplete="off" type="text" name="productBrand"
+                                                     value={productBrand} onChange={this.handleInputChange}
                                                      className={"bg-dark text-white"} placeholder="Brand name"/>
                                         <div className="invalid-feedback d-block">{productBrandError}</div>
                                     </InputGroup>
@@ -131,7 +141,8 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl autoComplete="off" type="email" name="productModel" value={productModel} onChange={this.handleInputChange}
+                                        <FormControl autoComplete="off" type="email" name="productModel"
+                                                     value={productModel} onChange={this.handleInputChange}
                                                      className={"bg-dark text-white"} placeholder="Model"/>
                                         <div className="invalid-feedback d-block">{productModelError}</div>
                                     </InputGroup>
@@ -140,8 +151,9 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl required autoComplete="off" type="number" name="productPrice" value={productPrice} onChange={this.handleInputChange}
-                                                     className={"bg-dark text-white"} placeholder="Price" />
+                                        <FormControl required autoComplete="off" type="number" name="productPrice"
+                                                     value={productPrice} onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"} placeholder="Price"/>
                                         <div className="invalid-feedback d-block">{productPriceError}</div>
                                     </InputGroup>
                                 </Form.Group>
@@ -149,25 +161,28 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                            <InputGroup.Prepend>
-                                                <InputGroup.Text>Category</InputGroup.Text>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text>Category</InputGroup.Text>
 
-                                            </InputGroup.Prepend>
-                                            <Form.Control as="select" className={"bg-dark text-white"} value={category} name="category" onChange={this.handleInputChange}>
-                                                {categories.map((category) => {
-                                                    return (
-                                                        <option name={category} value={category.categoryName}>{category.categoryName}</option>
-                                                    )
-                                                })}
-                                            </Form.Control >
+                                        </InputGroup.Prepend>
+                                        <Form.Control as="select" className={"bg-dark text-white"} value={category}
+                                                      name="category" onChange={this.handleInputChange}>
+                                            {categories.map((category) => {
+                                                return (
+                                                    <option name={category}
+                                                            value={category.categoryName}>{category.categoryName}</option>
+                                                )
+                                            })}
+                                        </Form.Control>
                                     </InputGroup>
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl autoComplete="off" type="number" name="productWeight" value={productWeight} onChange={this.handleInputChange}
-                                                     className={"bg-dark text-white"}  placeholder="Weight"/>
+                                        <FormControl autoComplete="off" type="number" name="productWeight"
+                                                     value={productWeight} onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"} placeholder="Weight"/>
                                         <div className="invalid-feedback d-block">{productWeightError}</div>
                                     </InputGroup>
                                 </Form.Group>
@@ -175,8 +190,9 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl autoComplete="off" type="number" name="productCapacity" value={productCapacity} onChange={this.handleInputChange}
-                                                     className={"bg-dark text-white"} placeholder= "Capacity"/>
+                                        <FormControl autoComplete="off" type="number" name="productCapacity"
+                                                     value={productCapacity} onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"} placeholder="Capacity"/>
                                         <div className="invalid-feedback d-block">{productCapacityError}</div>
                                     </InputGroup>
                                 </Form.Group>
@@ -184,8 +200,10 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl as="textarea" rows={3} autoComplete="off" type="text" name="productDescription" value={productDescription} onChange={this.handleInputChange}
-                                                     className={"bg-dark text-white"}  placeholder="Description"/>
+                                        <FormControl as="textarea" rows={3} autoComplete="off" type="text"
+                                                     name="productDescription" value={productDescription}
+                                                     onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"} placeholder="Description"/>
                                         <div className="invalid-feedback d-block">{productDescriptionError}</div>
                                     </InputGroup>
                                 </Form.Group>
@@ -193,8 +211,9 @@ class EditProduct extends Component {
                             <Form.Row>
                                 <Form.Group as={Col}>
                                     <InputGroup>
-                                        <FormControl autoComplete="off" type="number" name="amountInStock" value={amountInStock} onChange={this.handleInputChange}
-                                                     className={"bg-dark text-white"} placeholder= "Amount in stock" />
+                                        <FormControl autoComplete="off" type="number" name="amountInStock"
+                                                     value={amountInStock} onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"} placeholder="Amount in stock"/>
                                         <div className="invalid-feedback d-block">{amountInStockError}</div>
                                     </InputGroup>
                                 </Form.Group>
@@ -204,16 +223,17 @@ class EditProduct extends Component {
                                     <InputGroup>
                                         <InputGroup.Prepend>
                                             <InputGroup.Text>Status</InputGroup.Text>
-                                        </InputGroup.Prepend >
-                                        <Form.Control as="select" className={"bg-dark text-white"} name="active" value={active} onChange={this.handleInputChange}>
-                                            <option  name="active" value={true} >Active</option>
-                                            <option  name="active" value={false}>Inactive</option>
+                                        </InputGroup.Prepend>
+                                        <Form.Control as="select" className={"bg-dark text-white"} name="active"
+                                                      value={active} onChange={this.handleInputChange}>
+                                            <option name="active" value={true}>Active</option>
+                                            <option name="active" value={false}>Inactive</option>
                                         </Form.Control>
                                     </InputGroup>
                                 </Form.Group>
                             </Form.Row>
                         </Card.Body>
-                        <Card.Footer style={{"textAlign":"right"}}>
+                        <Card.Footer style={{"textAlign": "right"}}>
                             <Button size="sm" type="button" variant="success" onClick={this.onSubmitClick}
                                     disabled={this.state.productName.length === 0 || this.state.productBrand.length === 0}>
                                 <FontAwesomeIcon icon={faEdit}/> Save changes
@@ -233,4 +253,4 @@ const mapStateToProps = (state) => ({
     categories: state.catalog.categories
 });
 
-export default connect(mapStateToProps, { formReset, fetchProduct, updateProduct, fetchCategories})(EditProduct);
+export default connect(mapStateToProps, {formReset, fetchProduct, updateProduct, fetchCategories})(EditProduct);

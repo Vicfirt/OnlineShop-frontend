@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
-import c from "./Login.module.css"
 import {connect} from "react-redux";
 import {login, formReset} from '../../actions/auth_actions'
 import {Redirect} from 'react-router-dom';
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Button, Card, Col, Form, FormControl, InputGroup, Row} from "react-bootstrap";
+import {faSignInAlt, faEnvelope, faLock} from "@fortawesome/free-solid-svg-icons";
 
 class Login extends Component {
 
@@ -10,10 +12,6 @@ class Login extends Component {
         username: "",
         password: ""
     };
-
-    componentDidMount() {
-
-    }
 
     onClickSignIn = (event) => {
         event.preventDefault();
@@ -38,37 +36,49 @@ class Login extends Component {
         }
 
         return (
-            <div className={c.login}>
-                {error ? <div className="alert alert-danger" role="alert">{error}</div> : null}
-                {success ? <div className="alert alert-success" role="alert">{success}</div> : null}
-                <form onSubmit={this.onClickSignIn}>
-                    <div className="form-group">
-                        <label>Email address</label>
-                        <input
-                            className="form-control"
-                            type="email"
-                            name="username"
-                            value={username}
-                            onChange={this.handleInputChange}/>
-                    </div>
-                    <div className="form-group">
-                        <label>Password</label>
-                        <input
-                            className="form-control"
-                            type="password"
-                            name="password"
-                            value={password}
-                            onChange={this.handleInputChange}/>
-                    </div>
-                    <div className="form-group">
-                        <div>
-                            <a className="float-right" href="/signup">Sign Up</a>
-                        </div>
-                    </div>
-                    <div className="form-group">
-                        <input type="submit" className="btn btn-lg btn-primary btn-block" value="Sign In"/>
-                    </div>
-                </form>
+            <div align="center">
+                <Col className="col-4">
+                    {error ? <div className="alert alert-danger" role="alert">{error}</div> : null}
+                    {success ? <div className="alert alert-success" role="alert">{success}</div> : null}
+                    <Card className={"border border-dark bg-dark text-white"}>
+                        <Card.Header>
+                            <FontAwesomeIcon icon={faSignInAlt}/> Login
+                        </Card.Header>
+                        <Card.Body>
+                            <Form.Row>
+                                <Form.Group as={Col}>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text><FontAwesomeIcon icon={faEnvelope}/></InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl required autoComplete="off" type="email" name="username"
+                                                     value={username} onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"}
+                                                     placeholder="Enter Email Address"/>
+                                    </InputGroup>
+                                </Form.Group>
+                            </Form.Row>
+                            <Form.Row>
+                                <Form.Group as={Col}>
+                                    <InputGroup>
+                                        <InputGroup.Prepend>
+                                            <InputGroup.Text><FontAwesomeIcon icon={faLock}/></InputGroup.Text>
+                                        </InputGroup.Prepend>
+                                        <FormControl required autoComplete="off" type="password" name="password"
+                                                     value={password} onChange={this.handleInputChange}
+                                                     className={"bg-dark text-white"} placeholder="Enter Password"/>
+                                    </InputGroup>
+                                </Form.Group>
+                            </Form.Row>
+                        </Card.Body>
+                        <Card.Footer style={{"text-align": "right"}}>
+                            <Button size="sm" type="button" variant="success" onClick={this.onClickSignIn}
+                                    disabled={this.state.username.length === 0 || this.state.password.length === 0}>
+                                <FontAwesomeIcon icon={faSignInAlt}/> Login
+                            </Button>{' '}
+                        </Card.Footer>
+                    </Card>
+                </Col>
             </div>
         );
     }

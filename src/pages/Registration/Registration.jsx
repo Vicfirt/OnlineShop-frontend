@@ -1,11 +1,23 @@
 import React, {Component} from 'react';
 import {Row, Col, Card, Form, InputGroup, FormControl, Button} from 'react-bootstrap';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faPhone, faEnvelope, faLock, faUndo, faUserPlus, faUser, faBirthdayCake, faFlag, faCity, faMapPin, faHome} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+    faPhone,
+    faEnvelope,
+    faLock,
+    faUndo,
+    faUserPlus,
+    faUser,
+    faBirthdayCake,
+    faFlag,
+    faCity,
+    faMapPin,
+    faHome
+} from "@fortawesome/free-solid-svg-icons";
 import {connect} from "react-redux";
 import {formReset, registration} from '../../actions/auth_actions'
 
-class Registration extends Component{
+class Registration extends Component {
 
     initialState = {
         customerEmailAddress: "",

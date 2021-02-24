@@ -4,7 +4,9 @@ import {
     FETCH_CATEGORIES,
     FETCH_PRODUCT, FETCH_PRODUCTS,
     ADD_CATEGORY_FAILURE,
-    FETCH_BRANDS
+    FETCH_BRANDS,
+    DELETE_PRODUCT_FAILURE,
+    RESET_DELETION_FAILURE, FORM_RESET
 } from "../utils/constants/action_types";
 
 export const fetchAvailableProducts = () => async (dispatch) => {
@@ -39,17 +41,25 @@ export const fetchProduct = (productId) => async (dispatch) => {
 };
 
 export const deleteProduct = (productId) => async (dispatch) => {
-    const response = await axios({
-        method: "DELETE",
-        url: BACKEND_BASE_URL + "/product/" + productId,
-        headers: {
-            "Authorization": "Bearer " + localStorage.getItem("token")
-        }
-    })
-    dispatch({
-        type: FETCH_PRODUCTS,
-        payload: response.data
-    })
+    try {
+        const response = await axios({
+            method: "DELETE",
+            url: BACKEND_BASE_URL + "/product/deletion/" + productId,
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("token")
+            }
+        })
+        dispatch({
+            type: FETCH_PRODUCTS,
+            payload: response.data
+        })
+    } catch (error) {
+        dispatch({
+            type: DELETE_PRODUCT_FAILURE,
+            payload: error.response.data
+        })
+
+    }
 }
 
 export const fetchCategories = () => async (dispatch) => {
@@ -96,6 +106,12 @@ export const filterByParameters = (data) => async (dispatch) => {
     dispatch({
         type: FETCH_PRODUCTS,
         payload: response.data
+    })
+}
+
+export const resetDeletionError = () => async (dispatch) => {
+    dispatch({
+        type: RESET_DELETION_FAILURE
     })
 }
 

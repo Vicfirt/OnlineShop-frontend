@@ -2,10 +2,12 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {addOrder, fetchOrder, fetchCustomerOrders} from "../../actions/order_actions";
 import {fetchCustomerInfo} from "../../actions/profile_actions";
+import {clearCart} from "../../actions/cart_actions";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShoppingBag, faCheckCircle} from "@fortawesome/free-solid-svg-icons";
 import {Spinner} from "react-bootstrap";
 import Receipt from '../../components/Receipt/Receipt'
+import {IMAGE_PATH} from "../../utils/constants/backend_base_url";
 
 class Order extends Component {
     state = {
@@ -23,21 +25,32 @@ class Order extends Component {
         status: "In progress"
     }
 
+    componentWillReceiveProps(nextProps, nextContext) {
+        if (localStorage.getItem("userRole") === "CUSTOMER") {
+            this.props.fetchCustomerInfo();
+            this.setState(this.props.customer);
+        }
+    }
+
     componentDidMount() {
-        this.props.fetchCustomerInfo();
-        this.setState(this.props.customer);
         this.props.fetchOrder();
     }
 
+
     onSubmitClick = (event) => {
         event.preventDefault();
-        const productInformation =  Object.fromEntries(new Map(JSON.parse(localStorage.getItem("products"))));
-        const {customerFirstName, customerLastName, customerEmailAddress, country, city, street, postcode, building,
-            room, paymentMethod, shippingType, status  } = this.state;
+        const productInformation = Object.fromEntries(new Map(JSON.parse(localStorage.getItem("products"))));
+        const {
+            customerFirstName, customerLastName, customerEmailAddress, country, city, street, postcode, building,
+            room, paymentMethod, shippingType, status
+        } = this.state;
         const total = this.props.totalPrice;
-        const orderData = {customerFirstName, customerLastName, customerEmailAddress, country, city, street, postcode, building,
-            room, paymentMethod, shippingType, status, total, productInformation};
+        const orderData = {
+            customerFirstName, customerLastName, customerEmailAddress, country, city, street, postcode, building,
+            room, paymentMethod, shippingType, status, total, productInformation
+        };
         this.props.addOrder(orderData);
+        this.props.clearCart();
     }
 
     handleInputChange = (event) => {
@@ -51,18 +64,25 @@ class Order extends Component {
     render() {
         const productsInCart = new Map(JSON.parse(localStorage.getItem("products")));
         const {products, totalPrice, loading, justAddedOrder} = this.props;
-        const {customerFirstName, customerLastName, customerEmailAddress, country, city, street, postcode, building,
-            room, paymentMethod, shippingType} = this.state;
+        const {
+            customerFirstName, customerLastName, country, city, street, postcode, building,
+            room, paymentMethod, shippingType
+        } = this.state;
 
-        const {customerFirstNameError, customerLastNameError, customerEmailAddressError, countryError, cityError,
+        const {customerEmailAddress} = this.props.customer;
+
+        const {
+            customerFirstNameError, customerLastNameError, customerEmailAddressError, countryError, cityError,
             streetError, postcodeError, buildingError,
-            roomError} = this.props.errors;
+            roomError
+        } = this.props.errors;
 
         return (
             <div>
-                {justAddedOrder.length !==0 ? <Receipt order={justAddedOrder}></Receipt> :
+                {justAddedOrder.length !== 0 ? <Receipt order={justAddedOrder}></Receipt> :
                     <div className="container mt-5 pb-5">
-                        {loading ? <Spinner animation="border" variant="primary" role="status">
+                        {loading ? <Spinner style={{position: "fixed", top: "50%", left: "50%"}}
+                                            animation="border" variant="primary" role="status">
                                 <span className="sr-only">Loading...</span>
                             </Spinner> :
                             <div>
@@ -83,7 +103,8 @@ class Order extends Component {
                                                             name="customerFirstName"
                                                             value={customerFirstName}
                                                             onChange={this.handleInputChange}/>
-                                                        <div className="invalid-feedback d-block">{customerFirstNameError}</div>
+                                                        <div
+                                                            className="invalid-feedback d-block">{customerFirstNameError}</div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group row">
@@ -95,7 +116,8 @@ class Order extends Component {
                                                             name="customerLastName"
                                                             value={customerLastName}
                                                             onChange={this.handleInputChange}/>
-                                                        <div className="invalid-feedback d-block">{customerLastNameError}</div>
+                                                        <div
+                                                            className="invalid-feedback d-block">{customerLastNameError}</div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group row">
@@ -107,7 +129,8 @@ class Order extends Component {
                                                             name="customerEmailAddress"
                                                             value={customerEmailAddress}
                                                             onChange={this.handleInputChange}/>
-                                                        <div className="invalid-feedback d-block">{customerEmailAddressError}</div>
+                                                        <div
+                                                            className="invalid-feedback d-block">{customerEmailAddressError}</div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group row">
@@ -219,13 +242,14 @@ class Order extends Component {
                                                                 <div key={product.productId}
                                                                      className="col-lg-6 d-flex align-items-stretch">
                                                                     <div className="card mb-5">
-                                                                        <img src=""
-                                                                             className="rounded mx-auto w-50"/>
+                                                                        <img
+                                                                            src={IMAGE_PATH + `${product.productImage}`}
+                                                                            className="rounded mx-auto w-50"/>
                                                                         <div className="card-body text-center">
                                                                             <h5>{product.productBrand}</h5>
                                                                             <h6>{product.productName}</h6>
                                                                             <h6>
-                                                                                <span>Price: $ {product.productPrice}</span>.00
+                                                                                <span>Price: $ {product.productPrice}</span>
                                                                             </h6>
                                                                             <h6>
                                                                                 <span>Quantity: {productsInCart.get(product.productId)}</span>
@@ -242,7 +266,7 @@ class Order extends Component {
                                                     <FontAwesomeIcon icon={faCheckCircle}/> Confirm order
                                                 </button>
                                                 <div className="row">
-                                                    <h4>Total : $ <span>{totalPrice}</span>.00</h4>
+                                                    <h4>Total : $ <span>{totalPrice}</span></h4>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,5 +290,11 @@ const mapStateToProps = (state) => ({
     customer: state.profile.customer
 })
 
-export default connect(mapStateToProps, {addOrder, fetchOrder, fetchCustomerInfo, fetchCustomerOrders})(Order)
+export default connect(mapStateToProps, {
+    addOrder,
+    fetchOrder,
+    fetchCustomerInfo,
+    fetchCustomerOrders,
+    clearCart
+})(Order)
 

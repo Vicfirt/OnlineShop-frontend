@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
+    "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@material-ui/core": "^4.11.3",
@@ -14,6 +15,8 @@
     "axios": "^0.21.0",
     "bootstrap": "^4.6.0",
     "jquery": "^3.5.1",
+    "@nivo/pie": "^0.67.0",
+    "@nivo/core": "^0.67.0",
     "popper.js": "^1.16.1",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.3",

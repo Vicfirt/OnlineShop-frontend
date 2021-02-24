@@ -15,11 +15,11 @@ class Profile extends Component {
             <div className="row">
 
                 <div className="col">
-                    <CustomerInfo customerInfo={this.props.customer}></CustomerInfo>
+                    <CustomerInfo customerInfo={this.props.customer}/>
                 </div>
 
                 <div className="col">
-                    <AddressInfo addressInfo={this.props.customer}></AddressInfo>
+                    <AddressInfo addressInfo={this.props.customer}/>
                 </div>
             </div>
         )

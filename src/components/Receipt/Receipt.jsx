@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React  from 'react';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faShoppingCart, faShoppingBag} from "@fortawesome/free-solid-svg-icons";
 import {Link} from "react-router-dom";
@@ -34,6 +34,7 @@ const Receipt = ({order, backToOrders}) => {
                     <th scope="col">Post code</th>
                     <th scope="col">Total, $</th>
                     <th scope="col">Date</th>
+                    <th scope="col">Status</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@ const Receipt = ({order, backToOrders}) => {
                     <th scope="col">{order.postcode}</th>
                     <th scope="col">{order.total}</th>
                     <th scope="col">{order.date}</th>
+                    <th scope="col">{order.status}</th>
                 </tr>
                 </tbody>
             </table>
@@ -65,7 +67,7 @@ const Receipt = ({order, backToOrders}) => {
                             <th scope="col">{element.product.productName}</th>
                             <th scope="col">{element.product.productBrand}</th>
                             <th scope="col">{element.product.productModel}</th>
-                            <th scope="col">{element.product.productPrice}</th>
+                            <th scope="col">{element.elementPrice}</th>
                             <th scope="col">{element.quantityInOrder}</th>
                         </tr>
                     )

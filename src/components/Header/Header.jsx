@@ -19,8 +19,8 @@ class Header extends Component {
             <FontAwesomeIcon className="mr-3" size="lg" icon={faShoppingCart}/>
             <h5 className="d-inline"
                 style={{position: "relative", right: "15px", bottom: "8px"}}>
-                {this.props.products.length > 0 ?
-                    <span className="badge badge-success">{this.props.products.length}</span> : null}
+                {this.props.products.length === 0 ? null :
+                    <span className="badge badge-success">{this.props.products.length}</span>}
             </h5>
         </Link>
         if (localStorage.getItem("isLoggedIn") || this.props.isLoggedIn) {
@@ -64,6 +64,9 @@ class Header extends Component {
                         <li className="nav-item">
                             <Link to={"/product/add"} className="nav-link waves-effect text-primary">Add product</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link to={"/statistics"} className="nav-link waves-effect text-primary">Statistics</Link>
+                        </li>
                     </ul>
                 );
                 cartLink = null;
@@ -86,10 +89,9 @@ class Header extends Component {
         }
 
         return (
-
             <nav className="navbar navbar-expand-lg navbar-light white scrolling-navbar bg-dark">
                 <div className="container">
-                    <Link href="/" className="navbar-brand waves-effect">
+                    <Link to="/" className="navbar-brand waves-effect">
                         <strong className="blue-text">Online Shop</strong>
                     </Link>
                     <button className="navbar-toggler" type="button"
@@ -118,4 +120,4 @@ const mapStateToProps = (state) => ({
     products: state.cart.products
 });
 
-export default connect(mapStateToProps, {logout}) (Header);
+export default connect(mapStateToProps, {logout})(Header);

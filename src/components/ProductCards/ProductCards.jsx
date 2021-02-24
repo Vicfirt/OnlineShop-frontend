@@ -4,31 +4,31 @@ import PaginationBar from "../Pagination/PaginationBar";
 import SetPagination from "../Pagination/SetPagination";
 
 
-const ProductCards = ({products, cardsPerPage, startFrom, addToCart, deleteProduct, showInfo, lowPrice, maxPrice}) => {
+const ProductCards = ({items, cardsPerPage, startFrom, addToCart, deleteProduct, showInfo, lowPrice, maxPrice}) => {
     const {slicedData, pagination, prevPage, nextPage, changePage} = SetPagination({
-        cardsPerPage, products, startFrom
+        cardsPerPage, items, startFrom
     });
 
-    return  (
+    return (
         <div>
-        <div className="row">
-            {slicedData.filter((product) => product.productPrice > lowPrice && product.productPrice<maxPrice ).map((product) => {
-                return(
-                    <ProductCard
-                        product={product}
-                        addToCart={addToCart}
-                        deleteProduct={deleteProduct}
-                        showInfo={showInfo}
-                    />
-                )
-            })}
-        </div>
             <div className="row">
-            <PaginationBar
-                pagination={pagination}
-                prevPage={prevPage}
-                changePage={changePage}
-                nextPage={nextPage}/>
+                {slicedData.filter((product) => product.productPrice > lowPrice && product.productPrice < maxPrice).map((product) => {
+                    return (
+                        <ProductCard
+                            product={product}
+                            addToCart={addToCart}
+                            deleteProduct={deleteProduct}
+                            showInfo={showInfo}
+                        />
+                    )
+                })}
+            </div>
+            <div className="row">
+                <PaginationBar
+                    pagination={pagination}
+                    prevPage={prevPage}
+                    changePage={changePage}
+                    nextPage={nextPage}/>
             </div>
         </div>
     )

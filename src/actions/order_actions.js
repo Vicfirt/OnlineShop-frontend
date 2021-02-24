@@ -7,17 +7,18 @@ import {
     ORDER_FETCHED_SUCCESS,
     ORDERING_PROCESS,
     FETCH_CUSTOMER_ORDER,
-    FETCH_ALL_ORDERS
 
 } from '../utils/constants/action_types';
 
 import {BACKEND_BASE_URL} from '../utils/constants/backend_base_url'
 
 export const addOrder = (order) => async (dispatch) => {
+    dispatch({
+        type: ORDERING_PROCESS
+    })
     try {
         const response = await axios.post(BACKEND_BASE_URL + "/order", order);
         localStorage.removeItem("products");
-        console.log("successs")
         dispatch({
             type: ORDER_ADD_SUCCESS,
             payload: response.data
@@ -55,7 +56,7 @@ export const fetchCustomerOrders = () => async (dispatch) => {
 export const fetchOrderById = (orderId) => async (dispatch) => {
     const response = await axios({
         method: "GET",
-        url: BACKEND_BASE_URL + "/order/" + orderId,
+        url: BACKEND_BASE_URL + "/order/info/" + orderId,
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + localStorage.getItem("token")
@@ -85,7 +86,7 @@ export const fetchAllOrders = () => async (dispatch) => {
 export const updateOrder = (data, id) => async (dispatch) => {
     const response = await axios({
         method: "PATCH",
-        url: BACKEND_BASE_URL + "/order/" + id,
+        url: BACKEND_BASE_URL + "/order/status/" + id,
         data: data,
         headers: {
             "Content-Type": "application/json",

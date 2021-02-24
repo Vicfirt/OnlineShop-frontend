@@ -11,6 +11,7 @@ import {
     faShoppingCart
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {IMAGE_PATH} from "../../utils/constants/backend_base_url";
 
 class Cart extends Component {
 
@@ -19,7 +20,7 @@ class Cart extends Component {
     };
 
     componentDidMount() {
-        let products =  new Map(JSON.parse(localStorage.getItem("products")));
+        let products = new Map(JSON.parse(localStorage.getItem("products")));
 
         if (products !== null) {
             this.props.fetchCart(Array.from(products.keys()));
@@ -56,7 +57,7 @@ class Cart extends Component {
             this.setState({
                 productsInCart: productsInCart.set(parseInt(event.target.id), 1)
             });
-                localStorage.setItem("products", JSON.stringify(Array.from(productsInCart.entries())));
+            localStorage.setItem("products", JSON.stringify(Array.from(productsInCart.entries())));
         } else {
             this.setState({
                 productsInCart: productsInCart.set(parseInt(event.target.id), parseInt(event.target.value))
@@ -91,8 +92,8 @@ class Cart extends Component {
         const {productsInCart} = this.state;
         return (
             <div className="container mt-5 pb-5">
-                {isLoading ? <Spinner animation="border" variant="primary" role="status">
-                        <span className="sr-only">Loading...</span>
+                {isLoading ? <Spinner style={{position: "fixed", top: "50%", left: "50%"}}
+                                      animation="border" variant="primary" role="status">
                     </Spinner> :
                     <div>
                         {products.length === 0 ?
@@ -109,13 +110,13 @@ class Cart extends Component {
                                              style={{maxWidth: "940px"}}>
                                             <div className="row no-gutters">
                                                 <div className="col-2 ml-3 mt-3">
-                                                    <img src=""
+                                                    <img src={IMAGE_PATH + `${product.productImage}`}
                                                          className="rounded mx-auto w-50"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <div className="card-body">
                                                         <h4 className="card-title">{product.productBrand + " " + product.productName}</h4>
-                                                        <p className="card-text">{product.productPrice}</p>
+                                                        <p className="card-text">$ {product.productPrice}</p>
                                                     </div>
                                                 </div>
                                                 <div className="col-1 mt-3">
@@ -125,10 +126,11 @@ class Cart extends Component {
                                                         <FontAwesomeIcon size="md" icon={faChevronUp}/>
                                                     </button>
                                                     <input type="text"
-                                                           className="form-control input-number"
+                                                           className="form-control"
                                                            style={{width: "50px"}}
                                                            id={product.productId}
-                                                           value={productsInCart.get(product.productId)}
+                                                           aria-valuemax={product.amountInStock}
+                                                           value={0 ? 1 : productsInCart.get(product.productId)}
                                                            onChange={this.handleInputChange}/>
                                                     <button className="btn btn-default"
                                                             disabled={productsInCart.get(product.productId) === 1}

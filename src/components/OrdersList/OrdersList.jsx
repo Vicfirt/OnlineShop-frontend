@@ -1,5 +1,5 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React, {Component} from 'react';
+import React from 'react';
 import {faShoppingBag} from "@fortawesome/free-solid-svg-icons";
 import {Dropdown, DropdownButton} from "react-bootstrap";
 
@@ -27,14 +27,17 @@ const OrdersList = ({orders, showOrderInfo, changeOrderStatus}) => {
 
                     let statusField = (<th scope="col">{order.status}</th>);
 
-                    if(localStorage.getItem("userRole") === "ADMIN"){
+                    if (localStorage.getItem("userRole") === "ADMIN") {
                         statusField = (
                             <th scope="col">
-                            <DropdownButton title={order.status} drop="down">
-                            <Dropdown.Item onSelect={() => changeOrderStatus("During delivery", order.orderId)}>During delivery</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeOrderStatus("Delivered", order.orderId)}>Delivered</Dropdown.Item>
-                            <Dropdown.Item onSelect={() => changeOrderStatus("Rejected", order.orderId)}>Rejected</Dropdown.Item>
-                        </DropdownButton>
+                                <DropdownButton title={order.status} drop="down">
+                                    <Dropdown.Item onSelect={() => changeOrderStatus("During delivery", order.orderId)}>During
+                                        delivery</Dropdown.Item>
+                                    <Dropdown.Item
+                                        onSelect={() => changeOrderStatus("Delivered", order.orderId)}>Delivered</Dropdown.Item>
+                                    <Dropdown.Item
+                                        onSelect={() => changeOrderStatus("Rejected", order.orderId)}>Rejected</Dropdown.Item>
+                                </DropdownButton>
                             </th>)
                     }
 
@@ -48,7 +51,8 @@ const OrdersList = ({orders, showOrderInfo, changeOrderStatus}) => {
                             {statusField}
                             <th scope="col">{order.total}</th>
                             <th scope="col">
-                                <button className="btn btn-success" onClick={() => showOrderInfo(order.orderId)}>Show</button>
+                                <button className="btn btn-success" onClick={() => showOrderInfo(order.orderId)}>Show
+                                </button>
                             </th>
                         </tr>
                     )

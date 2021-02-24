@@ -1,9 +1,9 @@
 import {useState, useEffect} from 'react';
 
 const SetPagination = (initialState) => {
-    const {cardsPerPage, products, startFrom} = initialState;
+    const {cardsPerPage, items, startFrom} = initialState;
     const [searching, setSearching] = useState(false);
-    const [filteredData, setFilteredData] = useState(products);
+    const [filteredData, setFilteredData] = useState(items);
     const perPage = cardsPerPage ? cardsPerPage : 12;
     const pages = Math.ceil(filteredData.length / perPage);
     const pagination = [];
