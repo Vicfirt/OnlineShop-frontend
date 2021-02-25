@@ -12,16 +12,16 @@ const initialState = {
 
 };
 
-const reducer = (state = initialState, action) =>{
-    const{type, payload} = action;
+const reducer = (state = initialState, action) => {
+    const {type, payload} = action;
 
-    switch (type){
+    switch (type) {
         case CART_LOADING:
             return {...state, isLoading: true};
 
         case CALCULATE_CART_PRICE:
             return {...state, totalPrice: payload, isLoading: false};
-            
+
         case FETCH_CART:
             return {...state, products: payload, isLoading: false}
 

@@ -17,6 +17,7 @@ export const login = (data) => async (dispatch) => {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRole", response.data.role);
         localStorage.setItem("isLoggedIn", true);
+
         dispatch({
             type: LOGIN_SUCCESS,
             payload: response.data
@@ -27,6 +28,7 @@ export const login = (data) => async (dispatch) => {
             type: LOGIN_FAILURE,
             payload: error.response.data
         })
+
     }
 };
 
@@ -53,8 +55,12 @@ export const registration = (data) => async (dispatch) => {
 };
 
 export const logout = () => async (dispatch) => {
-    localStorage.clear();
+    localStorage.removeItem("email");
+    localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("isLoggedIn");
     dispatch({
         type: LOGOUT
     })
+    window.location.reload();
 };

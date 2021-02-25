@@ -1,5 +1,4 @@
 import React from 'react';
-import './index.css';
 import store from "./redux/reduxReducer";
 import 'font-awesome/css/font-awesome.min.css';
 import './index.css'
@@ -16,7 +15,7 @@ ReactDOM.render(
         <BrowserRouter>
             <App/>
         </BrowserRouter>
-    </Provider> , document.getElementById('root')
+    </Provider>, document.getElementById('root')
 );
 
 

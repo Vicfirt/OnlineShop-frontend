@@ -1,29 +1,11 @@
-.wrapper {
-
-  display: grid;
-
-
-  grid-template-areas:
-  "h"
-  "c"
-  "f";
-  grid-template-rows: 60px 587px 50px;
-  grid-template-columns: 1fr;
-
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-.content{
-
-
-  background-color: chartreuse;
-
-  grid-area: c;
+.content-wrap {
+    flex: 1;
 }
-
-
-
-
-
-
 
 

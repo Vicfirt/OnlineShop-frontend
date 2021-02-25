@@ -9,7 +9,6 @@ import {
 } from "../../utils/constants/action_types";
 
 const initialState = {
-    user: {},
     isLoggedIn: false,
     isRegistered: false,
     success: "",
@@ -37,7 +36,7 @@ const reducer = (state = initialState, action) => {
             return {...state, error: "", errors: {}, success: "", isRegistered: false};
 
         case LOGOUT:
-            return {...state, isLoggedIn: false, user: {}};
+            return {...state, isLoggedIn: false};
 
         default:
             return state;

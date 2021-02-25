@@ -11,6 +11,7 @@ import {
     faShoppingCart
 } from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {IMAGE_PATH} from "../../utils/constants/backend_base_url";
 
 class Cart extends Component {
 
@@ -86,14 +87,13 @@ class Cart extends Component {
         this.props.calculateCartPrice(this.props.products)
     }
 
-
     render() {
         const {products, isLoading, totalPrice} = this.props;
         const {productsInCart} = this.state;
         return (
             <div className="container mt-5 pb-5">
-                {isLoading ? <Spinner animation="border" variant="primary" role="status">
-                        <span className="sr-only">Loading...</span>
+                {isLoading ? <Spinner style={{position: "fixed", top: "50%", left: "50%"}}
+                                      animation="border" variant="primary" role="status">
                     </Spinner> :
                     <div>
                         {products.length === 0 ?
@@ -110,13 +110,13 @@ class Cart extends Component {
                                              style={{maxWidth: "940px"}}>
                                             <div className="row no-gutters">
                                                 <div className="col-2 ml-3 mt-3">
-                                                    <img src=""
+                                                    <img src={IMAGE_PATH + `${product.productImage}`}
                                                          className="rounded mx-auto w-50"/>
                                                 </div>
                                                 <div className="col-6">
                                                     <div className="card-body">
                                                         <h4 className="card-title">{product.productBrand + " " + product.productName}</h4>
-                                                        <p className="card-text">{product.productPrice}</p>
+                                                        <p className="card-text">$ {product.productPrice}</p>
                                                     </div>
                                                 </div>
                                                 <div className="col-1 mt-3">
@@ -126,10 +126,11 @@ class Cart extends Component {
                                                         <FontAwesomeIcon size="md" icon={faChevronUp}/>
                                                     </button>
                                                     <input type="text"
-                                                           className="form-control input-number"
+                                                           className="form-control"
                                                            style={{width: "50px"}}
                                                            id={product.productId}
-                                                           value={productsInCart.get(product.productId)}
+                                                           aria-valuemax={product.amountInStock}
+                                                           value={0 ? 1 : productsInCart.get(product.productId)}
                                                            onChange={this.handleInputChange}/>
                                                     <button className="btn btn-default"
                                                             disabled={productsInCart.get(product.productId) === 1}
@@ -180,7 +181,8 @@ class Cart extends Component {
 const mapStateToProps = (state) => ({
     products: state.cart.products,
     totalPrice: state.cart.totalPrice,
-    isLoading: state.cart.isLoading
+    isLoading: state.cart.isLoading,
+    isLoggedIn: state.auth.isLoggedIn,
 });
 
 export default connect(mapStateToProps, {fetchCart, stopCartLoading, calculateCartPrice})(Cart)
